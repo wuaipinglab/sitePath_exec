@@ -1,0 +1,5 @@
+name: sitePath_exec
+dependencies:
+  - r-optparse
+  - conda-forge::r-languageserver
+  - bioconda::bioconductor-sitepath

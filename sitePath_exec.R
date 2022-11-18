@@ -21,9 +21,17 @@ parser <- add_option(
     type = "double",
     default = NULL,
     help = paste(
-        "The parameter to resolve phylogenetic lineages",
+        "The parameter for fixation sites",
         "(default is recommended)"
     ),
+    metavar = "number"
+)
+parser <- add_option(
+    parser,
+    "--minSNP",
+    type = "double",
+    default = NULL,
+    help = "The parameter for parallel sites",
     metavar = "number"
 )
 parser <- add_option(
@@ -40,6 +48,7 @@ args <- parse_args(parser)
 tree_file <- args$treeFile
 msa_file <- args$msaFile
 n_min <- args$Nmin
+min_snp <- args$minSNP
 out_file <- args$outFile
 
 if (is.null(tree_file)) {
@@ -55,9 +64,13 @@ if (!is.null(n_min)) {
     paths <- lineagePath(tree = paths, similarity = n_min)
 }
 min_entropy <- sitesMinEntropy(x = paths)
-
 fixed_sites <- fixationSites(paths = min_entropy)
-para_sites <- parallelSites(x = min_entropy)
+
+if (!is.null(min_snp)) {
+    para_sites <- parallelSites(x = min_entropy, minSNP = min_snp)
+} else {
+    para_sites <- parallelSites(x = min_entropy)
+}
 
 fixed_and_parallel <- list(
     "fixed" = allSitesName(fixed_sites),

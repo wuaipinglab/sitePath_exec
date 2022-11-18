@@ -9,5 +9,5 @@ conda activate sitePath_exec
 
 ## Usage
 ```bash
-Rscript sitePath_exec.R --treeFile ./data/example_tree.newick --msaFile ./data/example_msa.fasta
+Rscript sitePath_exec.R --treeFile ./data/example_tree.newick --msaFile ./data/example_msa.fasta --minSNP 2
 ```
